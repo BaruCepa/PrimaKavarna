@@ -1,0 +1,33 @@
+footer {
+	background: #805F49;
+	display: flex;
+	justify-content: center;
+	padding: 50px;
+	color: white;
+	line-height: 150%; /* vyska radku, aby na sobe nebyly tolik nalepene */
+}
+
+footer .container {
+	display: flex;
+	justify-content: space-around;
+}
+
+footer a {
+	color: white;
+	text-decoration: none;
+}
+
+footer a:hover {
+	text-decoration: underline;
+}
+
+footer h3 {
+	font-size: 1,5em;
+	margin: 0.7em 0;
+}
+
+footer .otevreno th {
+	text-align: right; /* uprava prvniho sloupce (nazvy dnu), zarovnani vpravo */
+	font-weight: bold;
+	padding-right: 1em;
+}

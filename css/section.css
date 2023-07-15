@@ -1,0 +1,452 @@
+#content h1 {
+	font-size: 4em;
+	text-align: center;
+	margin: 0.6em 0; /*Nejdrive se zadava vertikalni odsazeni, pak horizontalni*/
+}
+
+#content p {
+	font-size: 1.4em;
+	line-height: 150%; /*Vyska radku, aby na sobe nebyly tak nalepene*/
+	text-align: justify; /*Zarovnani textu do bloku*/
+	text-indent: 1em; /*Odsazeni prvni radky odstavce*/
+}
+
+/*DOMU - O nas*/
+#content > .domu .onas { /*Vetsitko znamena, ze se odkazuju primo na dite toho odkazu #content*/
+	display: flex;
+	justify-content: center;
+}
+
+#content > .domu .onas .boxy {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 3em;
+}
+
+#content > .domu .onas .boxy .karta {
+	flex-basis: 0;
+	text-align: center;
+}
+
+#content > .domu .onas .boxy .karta h2 {
+	font-size: 2em;
+	margin: 1em 0;
+	border-bottom: 1px solid black;
+	display: inline-block;
+	padding-bottom: 12px;
+}
+
+#content > .domu .onas .boxy .karta a {
+	text-decoration: none;
+	color: black;
+	padding: 0.8em 3em;
+	border: 1px solid lightgrey;
+	border-radius: 10px;
+	display: inline-block; /*Zarovnani na stred*/
+	margin: 3em;
+	transition: all 0.3s ease; /*Animace ramecku*/
+}
+
+#content > .domu .onas .boxy .karta a:hover {
+	border: 1px solid black;
+}
+
+#content > .domu .onas .boxy .karta a i {
+	margin-left: 1em;
+	transition: all 0.3s ease; /*Animace sipecky*/
+}
+
+#content > .domu .onas .boxy .karta a:hover i {
+	transform: translateX(10px); /*Posun sipecky v X ose*/
+}
+
+@media (max-width: 1035px) {
+	#content > .domu .onas .boxy{
+		flex-direction: column; /*Zmena smeru textu na vertikalni pri nizsim rozliseni*/
+		row-gap: 4em; /*Mezera mezi kartami pri nizsim rozliseni*/
+	}
+	#content > .domu .onas .boxy .karta {
+		display: flex; /*Obrazek se dostane vedle textu*/
+		column-gap: 2em;
+	}
+	#content > .domu .onas .boxy .karta h2 {
+		margin-top: 0;
+	}
+}
+
+@media (max-width: 650px) {
+	#content > .domu .onas .boxy .karta {
+		flex-direction: column; /*Zmena smeru na sloupce, obrazek nad textem, ne vedle*/
+		align-items: center; /*Vycentrovani na stred pri jeste mensim rozliseni*/
+	}
+	#content > .domu .onas .boxy .karta h2 {
+		margin-top: 1em;
+	}
+}
+
+/*DOMU - Akce*/
+#content > .domu .akce {
+	display: flex; /*Aby se dve poloviny posadily pekne vedle sebe*/
+	margin-top: 3em;
+}
+
+#content > .domu .akce .levy {
+	width: 50%; /*Zabere presne pulku obrazovky*/
+	background: #A0785D;
+	display: flex;
+	justify-content: flex-end; /*Pozicovani textu doprava*/
+	padding: 2em;
+	text-align: right; /*Pozicovani textu doprava*/
+	color: white;
+}
+
+#content > .domu .akce .levy .boxy {
+	width: 500px;
+	display: flex;
+	flex-direction: column;
+	row-gap: 1.5em;
+	font-size: 0.8em;
+}
+
+#content > .domu .akce .levy .boxy h2 {
+	font-size: 2em;
+	margin: 0.5em 0;
+}
+
+#content > .domu .akce .pravy {
+	display: flex; /*Kvuli liste, aby byla presne tak vysoka jako obrazek*/
+	width: 50%;
+	background: url(../img/zrnka-kavy.jpg);
+	background-position: center; /*Vycentrovani obrazku na zadanou plochu*/
+	background-size: cover; /*Obrazek vetsi nez zadana plocha se zmensi dle zadane plochy a pekne ji pokryje + reaguje na zmenu okna*/
+}
+
+#content > .domu .akce .pravy .lista {
+	background: rgb(160, 120, 93, 0.6); /*Ctvrta hodnota udava miru pruhlednosti*/
+	width: 100px;
+}
+
+@media (max-width:700px) {
+	#content > .domu .akce .pravy {
+		width: 20%;
+	}
+	#content > .domu .akce .pravy .lista {
+		display: none;
+	}
+	#content > .domu .akce .levy {
+		width: 80%; /*Na malem rozliseni uprednostnime text pred obrazkem*/
+	}
+}
+
+/*DOMU - Nas tip*/
+#content > .domu .tip {
+	display: flex;
+	justify-content: center;
+	margin-top: 3em;
+	padding-bottom: 3em;
+}
+
+#content > .domu .tip .container {
+	display: flex;
+	column-gap: 3em;
+	align-items: center;
+}
+
+#content > .domu .tip .container .fotky {
+	display: flex;
+	column-gap: 3em;
+}
+
+#content > .domu .tip .container .fotky img {
+	box-shadow: 15px 15px #805F49;
+}
+
+#content > .domu .tip .container .text h2 {
+	font-size: 2em;
+}
+
+#content > .domu .tip .container .text p {
+	font-size: 1.2em;
+	margin-top: 1em;
+}
+
+@media (max-width: 1000px) {
+	#content > .domu .tip .container {
+		flex-direction: column;
+		row-gap: 50px;
+		align-items: initial; /*Zmena kvuli rozlozeni obrazku pri mensim rozliseni (okne)*/
+	}
+	#content > .domu .tip .container .fotky {
+		justify-content: space-evenly; /*Obrazky jsou vzdy rovnomerne rozlozeny ve svem div (drive pevna mezera*/
+	}
+	#content > .domu .tip .container .fotky img { /*Fotky se zmensuji v zavislosti na zmenseni okna (zachovan pomer stran)*/
+		width: 30vw;
+		height: 45vw;
+	}
+}
+
+/*NABIDKA - obsah*/
+#content > .nabidka .obsah {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 3em;
+}
+
+#content > .nabidka .obsah .boxy {
+	margin-top: 3em;
+}
+
+#content > .nabidka .obsah .boxy .karta {
+	display: flex;
+	align-items: center; /*Horizontalni centrovani obrazku a textu*/
+	justify-content: space-between;
+	margin-top: 3em;
+}
+
+#content > .nabidka .obsah .boxy .karta .obrazek {
+	display: grid; /*Aby se nadpis a obrazek navrstvily na sebe*/
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr;
+	grid-template-areas: "obrazek"; /*Vymezeni spolecneho prostoru*/
+	align-items: center; /*Centrovani obsahu spolecneho prostoru*/
+	justify-items: center;
+}
+
+#content > .nabidka .obsah .boxy .karta .obrazek h2 {
+	grid-area: obrazek; /*Prirazeni nadpisu do spolecneho prostoru*/
+	z-index: 1; /*Text bude nad obrazkem*/
+	color: white;
+	font-size: 4em;
+	text-shadow: 4px 4px 5px black; /*Treti hodnota stinu je blur - rozmazani stinu*/
+	text-transform: uppercase; /*Systemova uprava textu, z malych pismen se stanou velke*/
+}
+
+#content > .nabidka .obsah .boxy .karta .obrazek img {
+	grid-area: obrazek; /*Prirazeni nobrazku do spolecneho prostoru*/
+}
+
+#content > .nabidka .obsah .boxy .karta .cenik {
+	line-height: 150%;
+	font-size: 1.2em;
+}
+
+#content > .nabidka .obsah .boxy .karta .cenik th {
+	text-align: right;
+	font-weight: bold;
+	padding-right: 20px;
+}
+
+#content > .nabidka .obsah .boxy .karta .cenik td {
+	text-align: right;
+}
+
+@media (max-width: 1000px) {
+	#content > .nabidka .obsah .boxy .karta {
+		flex-direction: column;
+		row-gap: 2em;
+	}
+}
+
+@media (max-width: 550px) {
+	#content > .nabidka .obsah .boxy .karta .obrazek img {
+		width: 90vw;
+		height: 60vw;
+	}
+	#content > .nabidka .obsah .boxy .karta .obrazek h2 {
+		font-size: 10vw;
+	}
+}
+
+/*GALERIE - obsah*/
+#content > .galerie .obsah {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 3em;
+}
+
+#content > .galerie .obsah .fotky {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap; /*Pokud se polozky nevejdou, zalomi je*/
+	gap: 20px;
+	margin-top: 3em;
+}
+
+/*REZERVACE - obsah*/
+#content > .rezervace .obsah {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 3em;
+}
+
+#content > .rezervace .obsah .kontakt {
+	margin-top: 3em;
+	text-align: center;
+	line-height: 150%;
+	font-size: 1.2em;
+}
+
+#content > .rezervace .obsah .kontakt a {
+	text-decoration: none;
+	color: #805F49;
+}
+
+#content > .rezervace .obsah .kontakt a:hover {
+	text-decoration: underline;
+}
+
+#content > .rezervace .obsah .formular {
+    display: flex;
+    justify-content: center;
+    margin-top: 3em;
+}
+
+#content > .rezervace .obsah form {
+	width: 80%;
+}
+
+#content > .rezervace .obsah .formular .radka {
+	position: relative;
+	margin-top: 1em;
+}
+
+#content > .rezervace .obsah form .prvek {
+	width: 100%;
+	font-size: 2em;
+	padding: 0.3em;
+	padding-top: 1em;
+	transition: all 0.2s ease;
+	font-family: arial;
+}
+
+#content > .rezervace .obsah form .prvek:placeholder-shown { /*Pomoci odkazovani na placeholder se da udelat figl labelu s animaci, viz dale*/
+	padding-top: 0.3em;
+}
+
+#content > .rezervace .obsah form label {
+	position: absolute;
+	top: 0.5em;
+	left: 15px;
+	color: #805F49;
+	font-weight: bold;
+	transition: all 0.2s ease;
+}
+
+#content > .rezervace .obsah form .prvek:placeholder-shown + label {
+	font-size: 2em;
+	color: lightgrey;
+	left: 15px;
+}
+
+#content > .rezervace .obsah form button {
+	border-radius: 10px;
+	padding: 1em 2em;
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+/*KONTAKT - obsah*/
+#content > .kontakt .info {
+	display: flex;
+	justify-content: center;
+}
+
+#content > .kontakt .info .informace {
+	display: flex;
+	justify-content: space-around;
+	line-height: 150%;
+	font-size: 1.2em;
+}
+
+#content > .kontakt .info .informace h2 {
+	font-size: 2em;
+	margin: 0.5em 0;
+}
+
+#content > .kontakt .info .informace a {
+	text-decoration: none;
+	color: #805F49;
+}
+
+#content > .kontakt .info .informace a:hover {
+	text-decoration: underline;
+}
+
+#content > .kontakt .info .informace .otevreno th {
+	text-align: right;
+	font-weight: bold;
+	padding-right: 1em;
+}
+
+#content > .kontakt .mapa {
+	margin-top: 3em;
+}
+
+#content > .kontakt .obsah {
+	display: flex;
+	justify-content: center;
+	margin-top: 3em;
+	margin-bottom: 3em;
+}
+
+#content > .kontakt .obsah h2 {
+	font-size: 2em;
+	margin: 0.5em 0;
+	text-align: center;
+}
+
+#content > .kontakt .obsah .formular {
+    display: flex;
+    justify-content: center;
+}
+
+#content > .kontakt .obsah form {
+	width: 80%;
+}
+
+#content > .kontakt .obsah .formular .radka {
+	position: relative;
+	margin-top: 1em;
+}
+
+#content > .kontakt .obsah form .prvek {
+	width: 100%;
+	font-size: 2em;
+	padding: 0.3em;
+	padding-top: 1em;
+	transition: all 0.2s ease;
+	font-family: arial;
+}
+
+#content > .kontakt .obsah form .prvek:placeholder-shown { /*Pomoci odkazovani na placeholder se da udelat figl labelu s animaci, viz dale*/
+	padding-top: 0.3em;
+}
+
+#content > .kontakt .obsah form label {
+	position: absolute;
+	top: 0.5em;
+	left: 15px;
+	color: #805F49;
+	font-weight: bold;
+	transition: all 0.2s ease;
+}
+
+#content > .kontakt .obsah form .prvek:placeholder-shown + label {
+	font-size: 2em;
+	color: lightgrey;
+	left: 15px;
+}
+
+#content > .kontakt .obsah form button {
+	border-radius: 10px;
+	padding: 1em 2em;
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+/*Stranka neexistuje*/
+#content > .stranka-neexistuje .obrazek {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+}

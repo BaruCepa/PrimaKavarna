@@ -1,0 +1,125 @@
+header {
+	background-image: url(../img/header.jpg);
+	background-size: cover; /* obrazek rovnomerne pokryje udanou plochu */
+	padding-bottom: 30px;
+}
+
+menu {
+	background: rgb(72, 52, 42, 0.7);
+	display: flex;
+	justify-content: center;
+	padding: 0 5px;
+}
+
+header .container {
+	display: flex;
+	justify-content: space-between;
+}
+
+header nav {
+	display: flex;
+}
+
+header nav ul {
+	display: flex;
+	column-gap: 5px;
+}
+
+header nav ul li {
+	display: flex;
+}
+
+header nav ul li a {
+	color: white;
+	font-size: 20px;
+	display: flex;
+	align-items: center;
+	text-decoration: none; /* odkazy nebudou podtrhnute */
+	padding: 0 10px;
+}
+
+header nav ul li a:hover {
+	background: rgb(255, 255, 255, 0.2); /*Ctvrta hodnota udava miru pruhlednosti*/
+}
+
+header .nadpis {
+	color: white;
+	text-align: center;
+	margin-top: 200px;
+}
+
+header .nadpis {
+	text-shadow: 4px -4px 10px black;
+}
+
+header .nadpis h2 {
+	font-size: 100px;
+	font-family: "Kaushan Script";
+	border-bottom: 1px solid white;
+	display: inline-block;
+	padding-bottom: 10px;
+}
+
+header .nadpis h3 {
+	font-size: 20px;
+	margin-top: 10px;
+}
+
+header .nadpis .social {
+	margin-top: 15px;
+}
+
+header .nadpis .social a {
+	color: white;
+	font-size: 40px;
+	margin: 0 20px;
+}
+
+header .nadpis .social a:hover i.fa-facebook-f {
+	color: #1877F2;
+}
+
+header .nadpis .social a:hover i.fa-instagram {
+	color: #E4405F;
+}
+
+header .nadpis .social a:hover i.fa-youtube {
+	color: #CD201F;
+}
+
+@media (max-width: 700px) {
+	header .container {
+		flex-direction: column;
+	}
+	header nav {
+		justify-content: center;
+		margin-top: 20px;
+	}
+	header nav ul {
+		flex-direction: column;
+	}
+	header nav ul li {
+		justify-content: center;
+	}
+	header nav ul li a {
+		padding: 10px 20px;
+	}
+	header a.logo {
+		display: flex;
+		justify-content: center;
+	}
+	header .nadpis {
+		margin-top: 20px;
+		font-size: 10vw;
+	}
+	header .nadpis h2 {
+		font-size: 1em;
+	}
+	header .nadpis h3 {
+		font-size: 0.3em;
+	}
+	header .nadpis .social a {
+		font-size: 0.8em;
+		margin: 0 0.2em;
+	}
+}
