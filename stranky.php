@@ -1,5 +1,15 @@
 <?php
 
+// vytvoreni pripojeni na databazi
+$db = new PDO(
+	"mysql:host=localhost;dbname=primakavarna;charset=utf8",
+	"root",
+	"", // heslo
+	array(
+		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+	),
+);
+
 class stranka
 {
 	public $id;
@@ -24,11 +34,16 @@ class stranka
 	}
 }
 
-$seznamStranek = [
-	"uvod" => new Stranka("uvod", "PrimaKavárna", "Domů"),
-	"nabidka" => new Stranka("nabidka", "PrimaKavárna - Nabídka", "Nabídka"),
-	"galerie" => new Stranka("galerie", "PrimaKavárna - Galerie", "Galerie"),
-	"rezervace" => new Stranka("rezervace", "PrimaKavárna - Rezervace", "Rezervace"),
-	"kontakt" => new Stranka("kontakt", "PrimaKavárna - Kontakt", "Kontakt"),
-	"404" => new Stranka("404", "Stránka neexistuje", ""),
-];
+$seznamStranek = []; // naplnime dynamicky z databaze
+
+$dotaz = $db->prepare("SELECT id, titulek, menu FROM stranka ORDER BY poradi");
+$dotaz->execute();
+
+$stranky = $dotaz->fetchAll();
+
+// vezmeme pole radek, ktere nam vratila databaze a postupne nakrmime pole seznamStranek jednotlivymi instancemi tridy Stranka
+foreach ($stranky as $stranka)
+{
+	// pridame do pole novou instanci tridy stranka
+	$seznamStranek[$stranka["id"]] = new Stranka($stranka["id"], $stranka["titulek"], $stranka["menu"]);
+};
