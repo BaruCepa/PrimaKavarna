@@ -25,12 +25,32 @@ class stranka
 
 	function getObsah()
 	{
-		return file_get_contents("$this->id.html");
+		// nacteni obsahu stranky z databaze
+		global $db;
+
+		$dotaz = $db->prepare("SELECT obsah FROM stranka WHERE id = ?");
+		$dotaz->execute([$this->id]);
+
+		$vysledek = $dotaz->fetch();
+
+		// pokud by databaze nic nevratila, tak vratime prazdny obsah
+		if ($vysledek == false)
+		{
+			return "";
+		}
+		else
+		{
+			return $vysledek["obsah"];
+		}
 	}
 
 	function setObsah($obsah)
 	{
-		file_put_contents("$this->id.html", $obsah);
+		// ukladani obsahu stranky do databaze
+		global $db;
+
+		$dotaz = $db->prepare("UPDATE stranka SET obsah = ? WHERE id = ?");
+		$dotaz->execute([$obsah, $this->id]);
 	}
 }
 
