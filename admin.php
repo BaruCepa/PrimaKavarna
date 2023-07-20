@@ -44,11 +44,30 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 		$instanceAktualniStranky = $seznamStranek[$idStranky];
 	}
 
+	// zpracovani tlacitka pridat
+	if (array_key_exists("pridat", $_GET))
+	{
+		$instanceAktualniStranky = new Stranka("","","");
+	}
+
 	// zpracovani formulare pro ulozeni
 	if (array_key_exists("ulozit", $_POST))
 	{
+		// poznamename si puvodmi id, nez si ho prepiseme
+		$puvodniId = $instanceAktualniStranky->id;
+
+		$instanceAktualniStranky->id = $_POST["id"];
+		$instanceAktualniStranky->titulek = $_POST["titulek"];
+		$instanceAktualniStranky->menu = $_POST["menu"];
+		// zavolame funkci pro ulozeni zmenenych hodnot do databaze
+		$instanceAktualniStranky->ulozit($puvodniId);
+
+		// ukladani obsahu stranky
 		$obsah = $_POST["obsah"];
 		$instanceAktualniStranky->setObsah($obsah);
+
+		// presmerovani na novou url dle noveho id stranky
+		header("Location: ?stranka=".urlencode($instanceAktualniStranky->id));
 	}
 }
 
@@ -142,13 +161,40 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 			}
 			echo "</ul>";
 
+			// formular s tlacitkem pro pridani stranky
+			echo "<form><button name='pridat'>Přidat novou stránku</button></form>";
+
 			// editacni formular - zobrazi se, pokud vybereme nejakou stranku k editaci
 			if ($instanceAktualniStranky != null)
 			{
-				echo "<div class='alert alert-secondary' role='alert'><h1>Editace stránky: $instanceAktualniStranky->id</h1></div>";
+				echo "<div class='alert alert-secondary' role='alert'><h1>";
+				if ($instanceAktualniStranky->id == "")
+				{
+					echo "Nová stránka";
+				}
+				else
+				{
+					echo "Editace stránky: $instanceAktualniStranky->id";
+				}
+				echo "</h1></div>";
 
 				?>
 				<form method="post">
+					<div>
+						<label for="id">Id:</label>
+						<input type="text" name="id" id="id" value="<?php echo htmlspecialchars($instanceAktualniStranky->id) ?>">
+					</div>
+
+					<div>
+						<label for="titulek">Titulek:</label>
+						<input type="text" name="titulek" id="titulek" value="<?php echo htmlspecialchars($instanceAktualniStranky->titulek) ?>">
+					</div>
+
+					<div>
+						<label for="menu">Menu:</label>
+						<input type="text" name="menu" id="menu" value="<?php echo htmlspecialchars($instanceAktualniStranky->menu) ?>">
+					</div>
+
 					<textarea id="obsah" name="obsah" cols="80" rows="15"><?php
 					echo htmlspecialchars($instanceAktualniStranky->getObsah());
 					?></textarea>

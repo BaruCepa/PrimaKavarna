@@ -52,6 +52,31 @@ class stranka
 		$dotaz = $db->prepare("UPDATE stranka SET obsah = ? WHERE id = ?");
 		$dotaz->execute([$obsah, $this->id]);
 	}
+
+	function ulozit($puvodniId)
+    {
+        global $db;
+
+        if ($puvodniId != "")
+        {
+            // jde o aktualizaci existujici stranky
+            $dotaz = $db->prepare("UPDATE stranka SET id = ?, titulek = ?, menu = ? WHERE id = ?");
+            $dotaz->execute([$this->id, $this->titulek, $this->menu, $puvodniId]);
+        }
+        else
+        {
+            // jde o pridavani nove stranky
+            // zjisteni maximalniho poradi
+            $dotaz = $db->prepare("SELECT MAX(poradi) AS poradi FROM stranka");
+            $dotaz->execute();
+            $vysledek = $dotaz->fetch();
+            // vezmeme nejvysi poradi ktere je v tabulce a navysime o 1
+            $poradi = $vysledek["poradi"] + 1;
+
+            $dotaz = $db->prepare("INSERT INTO stranka SET id = ?, titulek = ?, menu = ?, poradi = ?");
+            $dotaz->execute([$this->id, $this->titulek, $this->menu, $poradi]);
+        }
+    }
 }
 
 $seznamStranek = []; // naplnime dynamicky z databaze
