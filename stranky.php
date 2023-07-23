@@ -77,6 +77,14 @@ class stranka
             $dotaz->execute([$this->id, $this->titulek, $this->menu, $poradi]);
         }
     }
+
+	function smazat()
+	{
+		global $db;
+
+		$dotaz = $db->prepare("DELETE FROM stranka WHERE id = ?");
+		$dotaz->execute([$this->id]);
+	}
 }
 
 $seznamStranek = []; // naplnime dynamicky z databaze

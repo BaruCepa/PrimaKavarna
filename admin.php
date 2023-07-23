@@ -50,6 +50,13 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 		$instanceAktualniStranky = new Stranka("","","");
 	}
 
+	// zpracovani tlacitka smazat
+	if (array_key_exists("smazat", $_GET))
+	{
+		$instanceAktualniStranky->smazat();
+		header("Location: ?"); // presmerovani domu
+	}
+
 	// zpracovani formulare pro ulozeni
 	if (array_key_exists("ulozit", $_POST))
 	{
@@ -153,7 +160,10 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 					$buttonClass = 'btn-secondary';
 				}
 				echo "<li class='list-group-item $active'>
+				<a class= 'btn $buttonClass' href='?stranka=$instanceStranky->id&smazat'><i class='fa-solid fa-trash-can'></i></a>
+
 				<a class= 'btn $buttonClass' href='?stranka=$instanceStranky->id'><i class='fa-solid fa-pen-to-square'></i></a>
+				
 				<a class= 'btn $buttonClass' href='$instanceStranky->id' target='_blank'><i class='fa-solid fa-eye'></i></a>
 
 				<span>$instanceStranky->id</span>
