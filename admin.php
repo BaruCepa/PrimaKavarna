@@ -171,9 +171,19 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 			}
 			echo "</ul>";
 
-			// formular s tlacitkem pro pridani stranky
-			echo "<form><button name='pridat'>Přidat novou stránku</button></form>";
+			// tlacitko pro pridani stranky
+			?>
+			<div class="container">
+                <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+                	<div class="col-md-3 text-start">
+						<form>
+							<button name='pridat' class="btn btn-outline-primary me-2">Přidat novou stránku</button>
+						</form>
+                	</div>
+                </header>
+            </div>
 
+			<?php
 			// editacni formular - zobrazi se, pokud vybereme nejakou stranku k editaci
 			if ($instanceAktualniStranky != null)
 			{
@@ -190,19 +200,19 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 
 				?>
 				<form method="post">
-					<div>
-						<label for="id">Id:</label>
-						<input type="text" name="id" id="id" value="<?php echo htmlspecialchars($instanceAktualniStranky->id) ?>">
+					<div class="form-floating">
+						<input type="text" name="id" id="id" class="form-control" value="<?php echo htmlspecialchars($instanceAktualniStranky->id) ?>" placeholder = "Id">
+						<label for="id">Id</label>
 					</div>
 
-					<div>
-						<label for="titulek">Titulek:</label>
-						<input type="text" name="titulek" id="titulek" value="<?php echo htmlspecialchars($instanceAktualniStranky->titulek) ?>">
+					<div class="form-floating">
+						<input type="text" name="titulek" id="titulek" class="form-control" value="<?php echo htmlspecialchars($instanceAktualniStranky->titulek) ?>" placeholder = "Titulek">
+						<label for="titulek">Titulek</label>
 					</div>
 
-					<div>
-						<label for="menu">Menu:</label>
-						<input type="text" name="menu" id="menu" value="<?php echo htmlspecialchars($instanceAktualniStranky->menu) ?>">
+					<div class="form-floating">
+						<input type="text" name="menu" id="menu" class="form-control" value="<?php echo htmlspecialchars($instanceAktualniStranky->menu) ?>" placeholder = "Menu">
+						<label for="menu">Menu</label>
 					</div>
 
 					<textarea id="obsah" name="obsah" cols="80" rows="15"><?php
