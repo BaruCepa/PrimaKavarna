@@ -44,11 +44,37 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 		$instanceAktualniStranky = $seznamStranek[$idStranky];
 	}
 
+	// zpracovani tlacitka pridat
+	if (array_key_exists("pridat", $_GET))
+	{
+		$instanceAktualniStranky = new Stranka("","","");
+	}
+
+	// zpracovani tlacitka smazat
+	if (array_key_exists("smazat", $_GET))
+	{
+		$instanceAktualniStranky->smazat();
+		header("Location: ?"); // presmerovani domu
+	}
+
 	// zpracovani formulare pro ulozeni
 	if (array_key_exists("ulozit", $_POST))
 	{
+		// poznamename si puvodmi id, nez si ho prepiseme
+		$puvodniId = $instanceAktualniStranky->id;
+
+		$instanceAktualniStranky->id = $_POST["id"];
+		$instanceAktualniStranky->titulek = $_POST["titulek"];
+		$instanceAktualniStranky->menu = $_POST["menu"];
+		// zavolame funkci pro ulozeni zmenenych hodnot do databaze
+		$instanceAktualniStranky->ulozit($puvodniId);
+
+		// ukladani obsahu stranky
 		$obsah = $_POST["obsah"];
 		$instanceAktualniStranky->setObsah($obsah);
+
+		// presmerovani na novou url dle noveho id stranky
+		header("Location: ?stranka=".urlencode($instanceAktualniStranky->id));
 	}
 }
 
@@ -134,7 +160,10 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 					$buttonClass = 'btn-secondary';
 				}
 				echo "<li class='list-group-item $active'>
+				<a class= 'btn $buttonClass' href='?stranka=$instanceStranky->id&smazat'><i class='fa-solid fa-trash-can'></i></a>
+
 				<a class= 'btn $buttonClass' href='?stranka=$instanceStranky->id'><i class='fa-solid fa-pen-to-square'></i></a>
+				
 				<a class= 'btn $buttonClass' href='$instanceStranky->id' target='_blank'><i class='fa-solid fa-eye'></i></a>
 
 				<span>$instanceStranky->id</span>
@@ -142,13 +171,50 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 			}
 			echo "</ul>";
 
+			// tlacitko pro pridani stranky
+			?>
+			<div class="container">
+                <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+                	<div class="col-md-3 text-start">
+						<form>
+							<button name='pridat' class="btn btn-outline-primary me-2">Přidat novou stránku</button>
+						</form>
+                	</div>
+                </header>
+            </div>
+
+			<?php
 			// editacni formular - zobrazi se, pokud vybereme nejakou stranku k editaci
 			if ($instanceAktualniStranky != null)
 			{
-				echo "<div class='alert alert-secondary' role='alert'><h1>Editace stránky: $instanceAktualniStranky->id</h1></div>";
+				echo "<div class='alert alert-secondary' role='alert'><h1>";
+				if ($instanceAktualniStranky->id == "")
+				{
+					echo "Nová stránka";
+				}
+				else
+				{
+					echo "Editace stránky: $instanceAktualniStranky->id";
+				}
+				echo "</h1></div>";
 
 				?>
 				<form method="post">
+					<div class="form-floating">
+						<input type="text" name="id" id="id" class="form-control" value="<?php echo htmlspecialchars($instanceAktualniStranky->id) ?>" placeholder = "Id">
+						<label for="id">Id</label>
+					</div>
+
+					<div class="form-floating">
+						<input type="text" name="titulek" id="titulek" class="form-control" value="<?php echo htmlspecialchars($instanceAktualniStranky->titulek) ?>" placeholder = "Titulek">
+						<label for="titulek">Titulek</label>
+					</div>
+
+					<div class="form-floating">
+						<input type="text" name="menu" id="menu" class="form-control" value="<?php echo htmlspecialchars($instanceAktualniStranky->menu) ?>" placeholder = "Menu">
+						<label for="menu">Menu</label>
+					</div>
+
 					<textarea id="obsah" name="obsah" cols="80" rows="15"><?php
 					echo htmlspecialchars($instanceAktualniStranky->getObsah());
 					?></textarea>
