@@ -76,6 +76,19 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 		// presmerovani na novou url dle noveho id stranky
 		header("Location: ?stranka=".urlencode($instanceAktualniStranky->id));
 	}
+
+	// zpracovani pozadavku zmeny poradi stranek z javascriptu (ajax)
+	if (array_key_exists("poradi", $_GET))
+	{
+		$poradi = $_GET["poradi"];
+
+		// zavolani funkce pro nastaveni poradi a ulozeni do databaze
+		Stranka::nastavitPoradi($poradi);
+
+		// odpoved javascriptu a ukonceni skriptu, at se negeneruje zbytek html
+		echo "OK";
+		exit;
+	}
 }
 
 ?>
@@ -96,6 +109,9 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 </head>
 <body>
 	<div class="admin-body">
@@ -111,8 +127,8 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 				<?php if ($chyba != "") {
 				?>
 					<div class="alert alert-danger" role="alert">
-                    	<?php echo $chyba; ?>
-                	</div>
+						<?php echo $chyba; ?>
+					</div>
 				<?php } ?>
 
 				<div class="form-floating">
@@ -136,18 +152,18 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 			echo "<main class='admin'>";
 
 			?>
-            <div class="container">
-                <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+			<div class="container">
+				<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
 					<div>Přihlášený uživatel: <?php echo $_SESSION["prihlasenyUzivatel"]; ?></div>
 
-                	<div class="col-md-3 text-end">
+					<div class="col-md-3 text-end">
 						<form method='post'>
 							<button name='odhlasit' class="btn btn-outline-primary me-2">Odhlásit</button>
 						</form>
-                	</div>
-                </header>
-            </div>
-            <?php
+					</div>
+				</header>
+			</div>
+			<?php
 			// vypiseme seznam stranek k editaci
 			echo "<ul id='stranky' class='list-group'>";
 			foreach ($seznamStranek as $idStranky => $instanceStranky)
@@ -159,8 +175,8 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 					$active = 'active';
 					$buttonClass = 'btn-secondary';
 				}
-				echo "<li class='list-group-item $active'>
-				<a class= 'btn $buttonClass' href='?stranka=$instanceStranky->id&smazat'><i class='fa-solid fa-trash-can'></i></a>
+				echo "<li class='list-group-item $active' id='$instanceStranky->id'>
+				<a class= 'smazat btn $buttonClass' href='?stranka=$instanceStranky->id&smazat'><i class='fa-solid fa-trash-can'></i></a>
 
 				<a class= 'btn $buttonClass' href='?stranka=$instanceStranky->id'><i class='fa-solid fa-pen-to-square'></i></a>
 				
@@ -174,14 +190,14 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 			// tlacitko pro pridani stranky
 			?>
 			<div class="container">
-                <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-                	<div class="col-md-3 text-start">
+				<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+					<div class="col-md-3 text-start">
 						<form>
 							<button name='pridat' class="btn btn-outline-primary me-2">Přidat novou stránku</button>
 						</form>
-                	</div>
-                </header>
-            </div>
+					</div>
+				</header>
+			</div>
 
 			<?php
 			// editacni formular - zobrazi se, pokud vybereme nejakou stranku k editaci
@@ -254,5 +270,7 @@ if (array_key_exists("prihlasenyUzivatel", $_SESSION))
 		}
 		?>
 	</div>
+
+	<script src="js/admin.js"></script>
 </body>
 </html>
